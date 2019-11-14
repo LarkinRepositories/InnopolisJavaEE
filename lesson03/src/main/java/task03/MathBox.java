@@ -26,10 +26,13 @@ public class MathBox<T extends Number> extends ObjectBox<T> {
 
     }
 
-//    @Override
-//    public void addObject(T object) {
-//        if (object.getClass().equals())
-//    }
+    @Override
+    public void addObject(T number) {
+        if (number.getClass().toString().equals("java.lang.Object")) {
+            throw new IllegalArgumentException("You cannot add exact Object class exemplar here");
+        }
+        super.addObject(number);
+    }
 
     /**
      * Метод, возвращающий значение суммы всех элементов множества numberSet
