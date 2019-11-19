@@ -19,9 +19,9 @@ public class Task02 {
      * Метод для генерации списка, состоящиего из случайных чисел от -500 до 500
      * @param digitsCount количество чисел, которые будут сгенерированы
      * @return список сгенерированных чисел
-     */
-    private static List<Double> generateDigitsList(int digitsCount) {
-        List<Double> digits = new ArrayList<>();
+         */
+        private static List<Double> generateDigitsList(int digitsCount) {
+            List<Double> digits = new ArrayList<>();
         for (int i = 0; i < digitsCount; i++) {
             digits.add(Math.random() * 500 * (Math.random() > 0.5 ? 1 : -1));
         }
