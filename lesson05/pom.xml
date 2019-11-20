@@ -5,13 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>InnopolisJavaEE</groupId>
-    <artifactId>InnopolisJavaEE</artifactId>
+    <artifactId>lesson05</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>lesson02</module>
-        <module>lesson03</module>
-        <module>lesson05</module>
-    </modules>
     <build>
         <plugins>
             <plugin>
@@ -26,6 +21,12 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
