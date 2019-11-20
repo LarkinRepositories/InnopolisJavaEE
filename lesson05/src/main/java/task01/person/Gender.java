@@ -1,6 +1,6 @@
 package task01.person;
 
-enum Gender {
+public enum Gender {
     MALE,
     FEMALE
 }
