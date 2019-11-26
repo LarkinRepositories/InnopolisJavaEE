@@ -58,8 +58,8 @@ public class FileGenerator {
             Path file = dir.resolve(String.format("file%s.txt", i));
             Files.createFile(file);
             BufferedWriter writer = Files.newBufferedWriter(file);
-            List<String> paragraph = generateParagraph(words, probability);
             while (fileSize < size) {
+                List<String> paragraph = generateParagraph(words, probability);
                 paragraph.forEach(e ->
                         {
                             try {
