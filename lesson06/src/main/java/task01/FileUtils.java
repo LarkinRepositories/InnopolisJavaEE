@@ -24,6 +24,7 @@ class FileUtils {
         while ((s = wordsReader.readLine()) != null) {
             wordsRead.addAll(Arrays.asList(s.split("\\s+")));
         }
+        wordsReader.close();
         return wordsRead;
     }
 
@@ -38,6 +39,7 @@ class FileUtils {
                     ex.printStackTrace();
                 }
             });
+            writer.close();
         }
     }
 }
