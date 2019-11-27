@@ -53,8 +53,8 @@ public class FileGenerator {
      */
     public static void getFiles(String path, int n, int size, String[] words, int probability) throws IOException {
         Path dir = Files.createTempDirectory(path);
-        int fileSize = 0;
         for (int i = 0; i < n; i++) {
+            int fileSize = 0;
             Path file = dir.resolve(String.format("file%s.txt", i));
             Files.createFile(file);
             BufferedWriter writer = Files.newBufferedWriter(file);
