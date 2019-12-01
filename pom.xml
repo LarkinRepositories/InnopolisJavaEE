@@ -12,6 +12,7 @@
         <module>lesson03</module>
         <module>lesson05</module>
         <module>lesson06</module>
+        <module>lesson07</module>
     </modules>
     <build>
         <plugins>
