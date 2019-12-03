@@ -16,5 +16,13 @@ public class SomeObject implements Serializable {
     private byte someByte;
 
 
-
+    public SomeObject(int number, String string, boolean someBoolean, char character, long someLong, double someDouble, byte someByte) {
+        this.number = number;
+        this.string = string;
+        this.someBoolean = someBoolean;
+        this.character = character;
+        this.someLong = someLong;
+        this.someDouble = someDouble;
+        this.someByte = someByte;
+    }
 }
