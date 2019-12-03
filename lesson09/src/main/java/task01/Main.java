@@ -90,7 +90,7 @@ public class Main {
      * @param path путь к файлу .java
      */
     private static void execute(String path) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String classFilePath = path.substring(0, path.length() -5).concat(".class");
+        String classFilePath = path.substring(0, path.length() - 5).concat(".class");
         ClassLoader classLoader = new Loader(classFilePath);
         Class<?> clazz = classLoader.loadClass("task01.SomeClass");
         Worker instanceOfWorker = (Worker) clazz.newInstance();
