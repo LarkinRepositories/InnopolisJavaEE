@@ -48,7 +48,7 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         String s;
         while (!(s = reader.readLine()).isEmpty()) {
-            sb.append("\n\r");
+            sb.append(s).append("\n\r");
         }
         return sb.toString();
     }
@@ -92,7 +92,7 @@ public class Main {
     private static void execute(String path) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String classFilePath = path.substring(0, path.length() -5).concat(".class");
         ClassLoader classLoader = new Loader(classFilePath);
-        Class<?> clazz = classLoader.loadClass("main/java/task01/SomeClass");
+        Class<?> clazz = classLoader.loadClass("task01.SomeClass");
         Worker instanceOfWorker = (Worker) clazz.newInstance();
         instanceOfWorker.doWork();
     }
