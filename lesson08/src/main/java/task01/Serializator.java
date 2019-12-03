@@ -64,6 +64,27 @@ public class Serializator {
     }
 
     /**
+     * Метод сериализующий объект SomeObject
+     * @param object объект для сериализации
+     * @param file путь к файлу, куда будет серилализован объект
+     */
+    public static void simpleSerialize(Object object, String file) {
+        SomeObject obj = (SomeObject) object;
+        try (DataOutputStream dos = new DataOutputStream(Files.newOutputStream(Paths.get(file)))) {
+            dos.writeInt(obj.getNumber());
+            dos.writeUTF(obj.getString());
+            dos.writeBoolean(obj.isSomeBoolean());
+            dos.writeChar(obj.getCharacter());
+            dos.writeLong(obj.getSomeLong());
+            dos.writeDouble(obj.getSomeDouble());
+            dos.writeByte(obj.getSomeByte());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
      * Метод, десереализующий объект из файла
      * @param file файл для десериализации
      * @return Someobject obj
