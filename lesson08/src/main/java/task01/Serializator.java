@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,32 +30,57 @@ public class Serializator {
      * @throws IllegalAccessException
      */
     public static void serialize(Object object, String file) throws IOException, IllegalAccessException {
-        List<Field> objectFields = new ArrayList<>(Arrays.asList(object.getClass().getFields()));
         try (DataOutputStream dos = new DataOutputStream(Files.newOutputStream(Paths.get(file)))) {
-            for (Field f: objectFields) {
-                if ("long".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeLong(f.getLong(f));
-                } else if ("int".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeInt(f.getInt(f));
-                } else if ("String".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeUTF(f.toString());
-                } else if ("boolean".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeBoolean(f.getBoolean(f));
-                } else if ("double".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeDouble(f.getDouble(f));
-                } else if ("char".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeChar(f.getChar(f));
-                } else if ("byte".equalsIgnoreCase(String.valueOf(f.getType()))) {
-                    dos.writeByte(f.getByte(f));
+            for (Field f : object.getClass().getDeclaredFields()) {
+                if (Modifier.isPrivate(f.getModifiers())) f.setAccessible(true);
+                switch (f.getType().getTypeName()) {
+                    case ("java.lang.String") :
+                        dos.writeUTF((String) f.get(object));
+                        break;
+                    case ("char") :
+                         dos.writeChar(f.getChar(object));
+                    break;
+                    case ("byte"):
+                        dos.writeByte(f.getByte(object));
+                        break;
+                    case ("short"):
+                        dos.writeShort(f.getShort(object));
+                        break;
+                    case ("int"):
+                        dos.writeInt(f.getInt(object));
+                        break;
+                    case ("boolean"):
+                        dos.writeByte(f.getByte(object));
+                        break;
+                    case ("double"):
+                        dos.writeDouble(f.getDouble(object));
+                        break;
+                    case ("long"):
+                        dos.writeLong(f.getLong(object));
+                        break;
                 }
-
             }
         }
     }
 
-    public static Object deSerialize(String file) throws IOException {
+    /**
+     * Метод, десереализующий объект из файла
+     * @param file файл для десериализации
+     * @return Someobject obj
+     * @throws IOException
+     */
+    public static SomeObject deSerialize(String file) throws IOException {
+        SomeObject obj = null;
         try (DataInputStream dis = new DataInputStream(Files.newInputStream(Paths.get(file)))) {
-            return null;
+            int number = dis.readInt();
+            String string = dis.readUTF();
+            boolean someBoolean = dis.readBoolean();
+            char character = dis.readChar();
+            long someLong = dis.readLong();
+            double someDouble = dis.readDouble();
+            byte someByte = dis.readByte();
+            obj = new SomeObject(number, string, someBoolean, character, someLong, someDouble,someByte);
         }
+        return obj;
     }
 }
