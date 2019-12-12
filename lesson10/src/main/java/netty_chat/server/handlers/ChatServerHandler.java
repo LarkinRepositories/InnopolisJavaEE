@@ -76,7 +76,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         commandHandlerMap.put(LoginCommand.class, new LoginHandler());
         commandHandlerMap.put(LogoutCommand.class, new LogoutHandler());
         commandHandlerMap.put(JoinChannelCommand.class, new JoinChannelHandler());
-        commandHandlerMap.put(LeaveCommand.class, new LeaveChannelHandler());
+//        commandHandlerMap.put(LeaveCommand.class, new LeaveChannelHandler());
         commandHandlerMap.put(ChatCommand.class, new ChatCommandHandler());
         commandHandlerMap.put(WhisperCommand.class, new WhisperCommandHandler());
     }
