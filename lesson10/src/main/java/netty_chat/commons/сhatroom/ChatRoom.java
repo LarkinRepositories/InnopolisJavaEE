@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class ChatRoom {
     private final ChannelGroup channels;
-//    private final ConcurrentHashMap<String, LocalDateTime> users;
     private final ConcurrentHashMap<String, ChannelId> users;
     private final ConcurrentLinkedDeque<Message> messageDeque;
     private final ConcurrentLinkedDeque<WhisperMessage> whisperMessageDeque;

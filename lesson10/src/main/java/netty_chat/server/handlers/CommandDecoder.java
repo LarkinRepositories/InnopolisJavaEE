@@ -21,6 +21,7 @@ public class CommandDecoder extends MessageToMessageDecoder<String> {
         operationsAndCommandsMap.put("/login", LoginCommand::new);
         operationsAndCommandsMap.put("/logout", LogoutCommand::new);
         operationsAndCommandsMap.put("/join", JoinChannelCommand::new);
+        operationsAndCommandsMap.put("/leave", LeaveCommand::new);
         operationsAndCommandsMap.put("/w", WhisperCommand::new);
     }
 

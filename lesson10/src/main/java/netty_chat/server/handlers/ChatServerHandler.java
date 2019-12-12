@@ -76,6 +76,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         commandHandlerMap.put(LoginCommand.class, new LoginHandler());
         commandHandlerMap.put(LogoutCommand.class, new LogoutHandler());
         commandHandlerMap.put(JoinChannelCommand.class, new JoinChannelHandler());
+        commandHandlerMap.put(LeaveCommand.class, new LeaveChannelHandler());
         commandHandlerMap.put(ChatCommand.class, new ChatCommandHandler());
         commandHandlerMap.put(WhisperCommand.class, new WhisperCommandHandler());
     }
@@ -117,6 +118,8 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         @Override
         public void handle(ChannelHandlerContext ctx, LogoutCommand command) {
             usernameGetter.apply(ctx).ifPresent(authService::logout);
+            ctx.writeAndFlush("logout success...closing");
+            ctx.channel().close();
         }
     }
 
@@ -147,6 +150,20 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
                 ctx.channel().attr(chatRoomAttr).set(command.getChatRoom());
                 ctx.writeAndFlush("You've successfully joined a channel");
             }
+        }
+    }
+
+
+    private class LeaveChannelHandler implements CommandHandler<LeaveCommand> {
+
+        @Override
+        public void handle(ChannelHandlerContext ctx, LeaveCommand command) {
+            usernameGetter.apply(ctx).ifPresent(username -> {
+                chatRoomGetter.apply(ctx).ifPresent(chatChannel -> chatRoomMap.get(chatChannel)
+                        .leave(ctx.channel(), username));
+                authService.logout(username);
+            });
+            ctx.writeAndFlush("you left the channel");
         }
     }
 
