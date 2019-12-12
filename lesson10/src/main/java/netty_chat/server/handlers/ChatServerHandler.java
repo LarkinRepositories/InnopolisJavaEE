@@ -1,33 +1,46 @@
 package netty_chat.server.handlers;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.AttributeKey;
-import netty_chat.commons.commands.ChatCommand;
-import netty_chat.commons.commands.Command;
-import netty_chat.commons.commands.LoginCommand;
-import netty_chat.commons.commands.LogoutCommand;
+import io.netty.util.concurrent.GlobalEventExecutor;
+import netty_chat.commons.commands.*;
+import netty_chat.commons.сhatroom.ChatRoom;
 import netty_chat.server.auth.AuthService;
 import netty_chat.server.auth.AuthServiceImpl;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 @ChannelHandler.Sharable
 public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
-
+    private final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private final Map<Class<? extends Command>, CommandHandler> commandHandlerMap = new HashMap<>();
     private final AuthService authService = new AuthServiceImpl();
+    private final ConcurrentHashMap<String, ChatRoom> chatRoomMap = new ConcurrentHashMap<>();
+
     private final AttributeKey<String> usernameAttr = AttributeKey.valueOf("username");
+    private final AttributeKey<String> chatRoomAttr = AttributeKey.valueOf("chatRoom");
+
 
 
 
 
     private Function<ChannelHandlerContext, Optional<String>> usernameGetter =
             ctx -> Optional.ofNullable(ctx.channel().attr(usernameAttr).get());
+
+    private Function<ChannelHandlerContext, Optional<String>> chatRoomGetter =
+            ctx -> Optional.ofNullable(ctx.channel().attr(chatRoomAttr).get());
+
+
 
     public ChatServerHandler() {
         initialize();
@@ -48,17 +61,28 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         }
     }
 
+
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
-        ctx.close();
+//        ctx.writeAndFlush("invalid command, try /help to see available commands list");
+        ctx.writeAndFlush("invalid command");
     }
 
+    /**
+     * Метод инициализации
+     */
     private void initialize() {
         commandHandlerMap.put(LoginCommand.class, new LoginHandler());
         commandHandlerMap.put(LogoutCommand.class, new LogoutHandler());
+        commandHandlerMap.put(JoinChannelCommand.class, new JoinChannelHandler());
+        commandHandlerMap.put(ChatCommand.class, new ChatCommandHandler());
     }
 
+
+    /**
+     * Обработчик команды логина
+     */
     private class LoginHandler implements CommandHandler<LoginCommand> {
 
         @Override
@@ -84,6 +108,9 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         }
     }
 
+    /**
+     * Обработчик команды выхода из чата
+     */
     private class LogoutHandler implements CommandHandler<LogoutCommand> {
 
         @Override
@@ -92,12 +119,51 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         }
     }
 
+    private class JoinChannelHandler implements CommandHandler<JoinChannelCommand> {
+
+        @Override
+        public void handle(ChannelHandlerContext ctx, JoinChannelCommand command) {
+            Optional<String> username = usernameGetter.apply(ctx);
+            if (!username.isPresent()) {
+                ctx.writeAndFlush("Anonymous attempt to join. Please authorize first");
+                return;
+            }
+
+            Optional<String> chatRoomName = chatRoomGetter.apply(ctx);
+
+            if(chatRoomName.map(chatRoom -> chatRoom.equals(command.getChatRoom())).orElse(false)) {
+                ctx.writeAndFlush("You've already joined that channel");
+                return;
+            }
+
+            chatRoomName.ifPresent(chatRoom -> chatRoomMap.get(chatRoom).leave(ctx.channel(), username.get()));
+            chatRoomMap.putIfAbsent(command.getChatRoom(), new ChatRoom(
+                    new DefaultChannelGroup(GlobalEventExecutor.INSTANCE)));
+
+            ChatRoom chatRoom = chatRoomMap.get(command.getChatRoom());
+
+            if (chatRoom.join(ctx.channel(), username.get())) {
+                ctx.channel().attr(chatRoomAttr).set(command.getChatRoom());
+                ctx.writeAndFlush("You've successfully joined a channel");
+            }
+        }
+    }
+
+    /**
+     * Обработчик команды добавления сообщения в чат
+     */
     private class ChatCommandHandler implements CommandHandler<ChatCommand> {
 
         @Override
         public void handle(ChannelHandlerContext ctx, ChatCommand command) {
             Optional<String> username = usernameGetter.apply(ctx);
-            if (username.isPresent()) {
+            Optional<String> chatRoomName = chatRoomGetter.apply(ctx);
+
+            if (username.isPresent() && chatRoomName.isPresent()) {
+                chatRoomMap.get(chatRoomName.get()).broadcast(username.get(), command.getMessage());
+            } else  {
+                String msg = !username.isPresent() ? "You are not authorized. Please use /login command to authorize" : "There's no such channel";
+                ctx.writeAndFlush(msg);
             }
         }
     }

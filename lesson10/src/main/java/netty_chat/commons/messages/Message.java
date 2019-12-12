@@ -2,8 +2,10 @@ package netty_chat.commons.messages;
 
 import lombok.AllArgsConstructor;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 
 @AllArgsConstructor
@@ -21,6 +23,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return String.format("%s (%s):\r\n %s\r\n", username, DATE_FORMATTER.format(time), text);
+       return  String.format("%s (%s):\r\n %s\r\n", username, DATE_FORMATTER.format(time), text);
     }
 }

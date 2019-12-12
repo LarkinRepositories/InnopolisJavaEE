@@ -31,6 +31,5 @@ public class User {
 
     public boolean sessionClosed() {
         return active.compareAndSet(true, false);
-
     }
 }

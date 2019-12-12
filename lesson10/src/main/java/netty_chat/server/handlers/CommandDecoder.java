@@ -4,10 +4,7 @@ package netty_chat.server.handlers;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import netty_chat.commons.commands.ChatCommand;
-import netty_chat.commons.commands.Command;
-import netty_chat.commons.commands.LoginCommand;
-import netty_chat.commons.commands.LogoutCommand;
+import netty_chat.commons.commands.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +20,7 @@ public class CommandDecoder extends MessageToMessageDecoder<String> {
     public CommandDecoder() {
         operationsAndCommandsMap.put("/login", LoginCommand::new);
         operationsAndCommandsMap.put("/logout", LogoutCommand::new);
+        operationsAndCommandsMap.put("/join", JoinChannelCommand::new);
     }
 
     @Override
