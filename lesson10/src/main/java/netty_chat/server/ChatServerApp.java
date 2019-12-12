@@ -33,32 +33,4 @@ public class ChatServerApp {
             eventLoopGroup.shutdownGracefully().sync();
         }
     }
-//    private void run() {
-//        EventLoopGroup bossGroup = new NioEventLoopGroup();
-//        EventLoopGroup workerGroup = new NioEventLoopGroup();
-//
-//        try {
-//            ServerBootstrap server = new ServerBootstrap();
-//            server.group(bossGroup, workerGroup)
-//                    .channel(NioServerSocketChannel.class)
-//                    .childHandler(new ServerChannelInitializer())
-////                    .childHandler(new ChannelInitializer<SocketChannel>() {
-////                        @Override
-////                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-////                            socketChannel.pipeline().addLast(
-//////                                    new AuthServiceHandler(),
-////                                    new MessageEncoder(),
-////                                    new MessageDecoder(),
-////                                    new ServerChatHandler());
-////                        }
-////                    })
-//                    .childOption(ChannelOption.SO_KEEPALIVE, true);
-//            server.bind(PORT).sync().channel().closeFuture().sync();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } finally {
-//            workerGroup.shutdownGracefully();
-//            bossGroup.shutdownGracefully();
-//        }
-//    }
 }

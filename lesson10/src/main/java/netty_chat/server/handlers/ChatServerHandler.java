@@ -77,6 +77,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
         commandHandlerMap.put(LogoutCommand.class, new LogoutHandler());
         commandHandlerMap.put(JoinChannelCommand.class, new JoinChannelHandler());
         commandHandlerMap.put(ChatCommand.class, new ChatCommandHandler());
+        commandHandlerMap.put(WhisperCommand.class, new WhisperCommandHandler());
     }
 
 
@@ -162,6 +163,21 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Command> {
             if (username.isPresent() && chatRoomName.isPresent()) {
                 chatRoomMap.get(chatRoomName.get()).broadcast(username.get(), command.getMessage());
             } else  {
+                String msg = !username.isPresent() ? "You are not authorized. Please use /login command to authorize" : "There's no such channel";
+                ctx.writeAndFlush(msg);
+            }
+        }
+    }
+
+    private class WhisperCommandHandler implements CommandHandler<WhisperCommand> {
+
+        @Override
+        public void handle(ChannelHandlerContext ctx, WhisperCommand command) {
+            Optional<String> username = usernameGetter.apply(ctx);
+            Optional<String> chatRoomName = chatRoomGetter.apply(ctx);
+            if (username.isPresent() && chatRoomName.isPresent()) {
+                chatRoomMap.get(chatRoomName.get()).whisper(username.get(), command.getAcceptor(), command.getMessage());
+            } else {
                 String msg = !username.isPresent() ? "You are not authorized. Please use /login command to authorize" : "There's no such channel";
                 ctx.writeAndFlush(msg);
             }

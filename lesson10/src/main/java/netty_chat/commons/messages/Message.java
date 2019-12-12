@@ -9,12 +9,12 @@ import java.util.Arrays;
 
 
 @AllArgsConstructor
-public class Message {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+public abstract class Message {
+    protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
-    private final String username;
-    private final LocalDateTime time;
-    private String text;
+    protected final String username;
+    protected final LocalDateTime time;
+    protected String text;
 
 
     public Message(String username, String text) {
@@ -23,6 +23,6 @@ public class Message {
 
     @Override
     public String toString() {
-       return  String.format("%s (%s):\r\n %s\r\n", username, DATE_FORMATTER.format(time), text);
+       return String.format("%s (%s):\r\n %s\r\n", username, DATE_FORMATTER.format(time), text);
     }
 }
