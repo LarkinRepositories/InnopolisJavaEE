@@ -7,9 +7,11 @@ import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+import java.nio.charset.StandardCharsets;
+
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
-    private static final StringDecoder STRING_DECODER = new StringDecoder();
-    private static final StringEncoder STRING_ENCODER = new StringEncoder();
+    private static final StringDecoder STRING_DECODER = new StringDecoder(StandardCharsets.UTF_8);
+    private static final StringEncoder STRING_ENCODER = new StringEncoder(StandardCharsets.UTF_8);
 
     private static final CommandDecoder COMMAND_DECODER = new CommandDecoder();
     private static final ChatServerHandler CHAT_SERVER_HANDLER = new ChatServerHandler();
