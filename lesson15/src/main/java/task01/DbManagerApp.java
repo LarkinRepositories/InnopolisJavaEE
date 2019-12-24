@@ -3,6 +3,7 @@ package task01;
 
 import java.sql.*;
 
+
 /**
  *  Спроектировать базу
  *Таблица USER содержит поля id, name, birthday, login_ID, city, email, description
@@ -38,10 +39,10 @@ public class DbManagerApp {
         String SQL = "CREATE TABLE IF NOT EXISTS USER (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, birthday DATE, login_ID INT NOT NULL, city VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, description VARCHAR(Integer.MAX_VALUE))";
         PreparedStatement ps = connection.prepareStatement(SQL);
         ps.addBatch();
-        SQL = "CREATE TABLE IF NOT EXISTS ROLE(id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, description VARCHAR(Integer.MAX_VALUE) ADD CONSTRAINT THIS_ID_USER_ID FOREIGN KEY id REFERENCES USER.id)";
+        SQL = "CREATE TABLE IF NOT EXISTS ROLE(id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, description VARCHAR(Integer.MAX_VALUE)";
         ps = connection.prepareStatement(SQL);
         ps.addBatch();
-        SQL = "CREATE TABLE IF NOT EXISTS USER_ROLE(id INTEGER PRIMARY_KEY AUTO_INCREMENT, user_id INTEGER NOT NULL, ADD  CONSTRAINT USER_id, role_id INT ADD CONSTRAINT THIS_ID_ROLE_ID FOREIGN KEY id REFERENCES USER_ROLE.id)";
+        SQL = "CREATE TABLE IF NOT EXISTS USER_ROLE(id INTEGER PRIMARY KEY AUTO_INCREMENT, user_id INTEGER NOT NULL, role_id INTEGER NOT NULL)";
         ps = connection.prepareStatement(SQL);
         ps.addBatch();
         ps.executeBatch();
