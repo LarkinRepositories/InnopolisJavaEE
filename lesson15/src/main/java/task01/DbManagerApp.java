@@ -36,7 +36,7 @@ public class DbManagerApp {
         Class.forName("org.h2.Driver").newInstance();
         Connection connection = DriverManager.getConnection("jdbc:h2:./src/main/resources/database.mv.db");
         connection.setAutoCommit(false);
-        String SQL = "CREATE TABLE IF NOT EXISTS USER (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, birthday DATE, login_ID INT NOT NULL, city VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, description VARCHAR(255))";
+        String SQL = "CREATE TABLE IF NOT EXISTS USER (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, birthday DATE, login_ID INTEGER NOT NULL, city VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, description VARCHAR(255))";
         PreparedStatement ps = connection.prepareStatement(SQL);
         ps.addBatch();
         SQL = "CREATE TYPE ROLE as ENUM ('Administration', 'Clients', 'Billing')";

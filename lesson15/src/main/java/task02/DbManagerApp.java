@@ -53,7 +53,7 @@ public class DbManagerApp {
         connection.setAutoCommit(false);
         ps.setString(1,"UserName");
         ps.setTimestamp(2, Timestamp.valueOf("1978-15-19 05:10:12"));
-        ps.setString(3, "username");
+        ps.setInt(3, 1);
         ps.setString(4, "AnotherCity");
         ps.setString(5, "email@mail.ru");
         ps.setString(6, "username's description");
@@ -61,7 +61,7 @@ public class DbManagerApp {
 
         ps.setString(1, "Just another user");
         ps.setTimestamp(2, Timestamp.valueOf("1978-15-19 05:10:12"));
-        ps.setString(3, "username1");
+        ps.setInt(3, 1);
         ps.setString(4, "AnotherCity1");
         ps.setString(5, "email1@mail.ru");
         ps.setString(6, "username's description1");
