@@ -22,6 +22,7 @@
         <module>lesson09</module>
         <module>lesson10</module>
         <module>lesson12</module>
+        <module>lesson15</module>
     </modules>
     <build>
         <plugins>
