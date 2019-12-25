@@ -1,0 +1,71 @@
+package task01;
+
+
+import java.sql.*;
+
+
+/**
+ *  Спроектировать базу
+ *Таблица USER содержит поля id, name, birthday, login_ID, city, email, description
+ *Таблица ROLE содержит поля id, name (принимает значения Administration, Clients, Billing), description
+ *Таблица USER_ROLE содержит поля id, user_id, role_id
+ *
+ *
+ *
+ */
+public class DbManagerApp {
+    public static volatile DbManagerApp instance;
+
+    private DbManagerApp() {};
+
+    public static DbManagerApp getInstance() {
+        DbManagerApp localInstance = instance;
+        if (localInstance == null) {
+            synchronized (DbManagerApp.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DbManagerApp();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    /**
+     * Метод, для создания таблиц из условия
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * @throws SQLException
+     */
+    public void createTables() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+        Class.forName("org.h2.Driver").newInstance();
+        Connection connection = DriverManager.getConnection("jdbc:h2:./src/main/resources/database.mv.db");
+        connection.setAutoCommit(false);
+        String SQL = "CREATE TABLE IF NOT EXISTS USER (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, birthday DATE, login_ID INTEGER NOT NULL UNIQUE, city VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE, description VARCHAR(255))";
+        PreparedStatement ps = connection.prepareStatement(SQL);
+        ps.addBatch();
+        SQL = "CREATE TYPE ROLE as ENUM ('Administration', 'Clients', 'Billing')";
+        ps = connection.prepareStatement(SQL);
+        ps.addBatch();
+        ps.executeBatch();
+        SQL = "CREATE TABLE IF NOT EXISTS ROLE(id INTEGER PRIMARY KEY AUTO_INCREMENT, name ROLE, description VARCHAR(255))";
+        ps = connection.prepareStatement(SQL);
+        ps.addBatch();
+        SQL = "CREATE TABLE IF NOT EXISTS USER_ROLE(id INTEGER PRIMARY KEY AUTO_INCREMENT, user_id INTEGER NOT NULL UNIQUE, role_id INTEGER NOT NULL)";
+        ps = connection.prepareStatement(SQL);
+        ps.addBatch();
+        ps.executeBatch();
+        System.out.println("TABLES SUCCESSFULLY CREATED");
+    }
+
+
+
+    public static void main(String[] args) {
+        try {
+            DbManagerApp.getInstance().createTables();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

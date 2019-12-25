@@ -22,6 +22,7 @@
         <module>lesson09</module>
         <module>lesson10</module>
         <module>lesson12</module>
+        <module>lesson15</module>
     </modules>
     <build>
         <plugins>
@@ -42,6 +43,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.199</version>
         </dependency>
     </dependencies>
 </project>
