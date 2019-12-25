@@ -14,7 +14,7 @@ public class DbManagerApp {
         try {
             DriverManager.registerDriver(new org.h2.Driver());
             insertUserWithBatch();
-            printUsers("username", "UserName");
+            printUsers(1, "UserName");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -25,11 +25,11 @@ public class DbManagerApp {
      * @param loginId login_iD пользователя
      * @param username name пользователя
      */
-    public static void printUsers(String loginId, String username) throws SQLException {
-        String query = "SELECT FROM \"user\" u WHERE u.login_ID = ? AND name = ?";
+    public static void printUsers(Integer loginId, String username) throws SQLException {
+        String query = "SELECT * FROM PUBLIC.USER WHERE user.login_ID = ? AND user.NAME = ?";
         Connection connection = DriverManager.getConnection(connectionUrl);
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, loginId);
+        ps.setInt(1, loginId);
         ps.setString(2, username);
         ps.execute();
 

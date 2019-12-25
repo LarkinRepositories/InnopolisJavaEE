@@ -1,6 +1,7 @@
 package task02;
 
 import java.sql.*;
+import java.util.Random;
 
 /**
  * 2) Через jdbc интерфейс сделать запись данных(INSERT) в таблицу
@@ -11,6 +12,9 @@ import java.sql.*;
 public class DbManagerApp {
     private static final String connectionUrl = "jdbc:h2:./src/main/resources/database.mv.db";
     private static final String QUERY = "INSERT INTO USER (name, birthday, login_id, city, email, description) VALUES(?, ?, ?, ?, ?, ?)";
+
+    private static Random random = new Random();
+
 
     public static void main(String[] args) {
         try {
@@ -30,8 +34,8 @@ public class DbManagerApp {
         Connection connection = DriverManager.getConnection(connectionUrl);
         PreparedStatement ps = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, "Name");
-        ps.setTimestamp(2, Timestamp.valueOf("1988-10-12 00:00:00"));
-        ps.setString(3, "name");
+        ps.setTimestamp(2, Timestamp.valueOf("1988-10-12 01:10:01"));
+        ps.setInt(3, 1);
         ps.setString(4, "City");
         ps.setString(5, "mail@mail.com");
         ps.setString(6, "description");
@@ -52,16 +56,16 @@ public class DbManagerApp {
         PreparedStatement ps = connection.prepareStatement(QUERY);
         connection.setAutoCommit(false);
         ps.setString(1,"UserName");
-        ps.setTimestamp(2, Timestamp.valueOf("1978-15-19 05:10:12"));
-        ps.setInt(3, 1);
+        ps.setTimestamp(2, Timestamp.valueOf("2001-05-01 01:10:11"));
+        ps.setInt(3, random.nextInt());
         ps.setString(4, "AnotherCity");
         ps.setString(5, "email@mail.ru");
         ps.setString(6, "username's description");
         ps.addBatch();
 
         ps.setString(1, "Just another user");
-        ps.setTimestamp(2, Timestamp.valueOf("1978-15-19 05:10:12"));
-        ps.setInt(3, 1);
+        ps.setTimestamp(2, Timestamp.valueOf("2009-07-02 05:10:11"));
+        ps.setInt(3, random.nextInt());
         ps.setString(4, "AnotherCity1");
         ps.setString(5, "email1@mail.ru");
         ps.setString(6, "username's description1");
