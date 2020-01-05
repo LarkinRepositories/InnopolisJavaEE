@@ -35,16 +35,17 @@ public class DBManager {
      * @throws SQLException
      */
     public Connection getConnection() {
+        Connection connection = null;
         try {
             LOGGER.info("Trying to connect...");
             Class.forName("org.h2.Driver").newInstance();
-            return DriverManager.getConnection("jdbc:h2:./src/main/resources/lesson16.mv.db");
+            connection = DriverManager.getConnection("jdbc:h2:./src/main/resources/lesson16.mv.db");
             LOGGER.info("Connection successful");
         } catch (InstantiationException | SQLException | ClassNotFoundException | IllegalAccessException e) {
             e.printStackTrace();
             LOGGER.error("Connection ends up with ERROR: " + e);
         }
-
+        return connection;
     }
 
     /**
