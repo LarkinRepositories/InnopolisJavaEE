@@ -7,7 +7,10 @@ import org.apache.log4j.PropertyConfigurator;
 public class LoggingUtil {
     public static final Logger LOGGER = LogManager.getLogger("Logger");
     static {
-        PropertyConfigurator.configure("./src/main/resources/log4j.properties");
+//        PropertyConfigurator.configure("./src/main/resources/log4j.properties");
+        PropertyConfigurator.configure(
+                "C:\\dm\\larkinds\\rm\\InnopolisJavaEE\\lesson16\\src\\main\\resources\\log4j.properties"
+        );
     }
 
 }

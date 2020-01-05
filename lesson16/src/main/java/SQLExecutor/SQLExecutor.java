@@ -54,12 +54,12 @@ public class SQLExecutor {
 //                LOGGER.info( "User id:"+ rs.getInt(1));
                 return rs.getInt(1);
             }
-            return -1;
+
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error("insertUser method ends with ERROR: " + e);
         }
-
+        return -1;
     }
 
     /**
@@ -145,19 +145,20 @@ public class SQLExecutor {
             connection.setAutoCommit(false);
             st.executeUpdate(
                     "INSERT INTO USER (name, login_Id, city, email, description) " +
-                            "VALUES ('NewUser', 100, 'City', 'mail@mail.co.uk', 'Description')"
+                            "VALUES ('UserName', 100, 'City', 'mail@mail.co.uk', 'Description')"
             );
+            st.executeUpdate("INSERT INTO ROLE (NAME, DESCRIPTION) VALUES ('Administration', 'BOB')");
             st.executeUpdate(
                     "INSERT INTO USER_ROLE (USER_ID, ROLE_ID)" +
-                            "VALUES (SELECT id FROM USER WHERE name = 'NewUser' ), " +
-                            "(SELECT id FROM ROLES WHERE name = 'Administration'))"
+                            "VALUES (SELECT id FROM USER WHERE name = 'Name' ), " +
+                            "(SELECT id FROM ROLE WHERE name = 'Administration')"
             );
             connection.commit();
             connection.setAutoCommit(true);
             LOGGER.info("setSavePointOnSQLOperation method successfully finished");
         } catch (SQLException e) {
             e.printStackTrace();
-            LOGGER.info("setSavePointOnSQLOperation ends with ERROR: " + e);
+            LOGGER.error("setSavePointOnSQLOperation ends with ERROR: " + e);
         }
 
     }
@@ -170,7 +171,7 @@ public class SQLExecutor {
         if (connection == null) throw new IllegalArgumentException("Connection is null");
         LOGGER.info("setSavePointWithRollback begins to work");
         Savepoint savepoint = null;
-        Statement statement = null;
+        Statement statement;
         try {
             connection.setAutoCommit(false);
             statement = connection.createStatement();
