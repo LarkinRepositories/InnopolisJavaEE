@@ -63,6 +63,19 @@ public class DBManager {
         }
     }
 
+    public void createUser(Connection connection) {
+//        LOGGER.info("createUser method begins to work");
+        try {
+            final String SQL = "CREATE USER IF NOT EXISTS user password 'password' admin";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+//            LOGGER.error(e);
+        }
+    }
+
+
     /**
      * Метод, создающий таблицы в БД
      */

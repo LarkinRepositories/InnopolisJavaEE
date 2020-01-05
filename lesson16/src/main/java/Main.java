@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
             final Connection connection = DBManager.getInstance().getConnection();
             final SQLExecutor executor = SQLExecutor.getInstance();
+            DBManager.getInstance().createUser(connection);
             DBManager.getInstance().createTables(connection);
             executor.insertUser(connection);
             executor.insertUserWithBatch(connection);
