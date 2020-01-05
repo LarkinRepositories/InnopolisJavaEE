@@ -147,7 +147,6 @@ public class SQLExecutor {
                     "INSERT INTO USER (name, login_Id, city, email, description) " +
                             "VALUES ('UserName', 100, 'City', 'mail@mail.co.uk', 'Description')"
             );
-            st.executeUpdate("INSERT INTO ROLE (NAME, DESCRIPTION) VALUES ('Administration', 'BOB')");
             st.executeUpdate(
                     "INSERT INTO USER_ROLE (USER_ID, ROLE_ID)" +
                             "VALUES (SELECT id FROM USER WHERE name = 'Name' ), " +
