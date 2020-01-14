@@ -27,7 +27,7 @@
         <Root level="all">
             <AppenderRef ref="file" level="DEBUG"/>
             <AppenderRef ref="stdout" level="INFO"/>
-            <AppenderRef ref="DATABASE" level="DEBUG" />
+            <AppenderRef ref="DATABASE" level="ERROR" />
         </Root>
         <Logger name="MainLog" level="info" additivity="false">
             <AppenderRef ref="file2" level="INFO"/>

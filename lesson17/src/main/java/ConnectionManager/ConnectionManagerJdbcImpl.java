@@ -45,6 +45,20 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
         return connection;
     }
 
+    @Override
+    public boolean closeConnection(Connection connection) {
+        try {
+            LOGGER.info("closing connection");
+            connection.close();
+            LOGGER.info("connection successfully closed");
+        } catch (SQLException e) {
+            LOGGER.error("Error closing the connection: " + e);
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public static Connection getDatabaseConnection() {
         return ConnectionManagerJdbcImpl.getInstance().getConnection();
     }

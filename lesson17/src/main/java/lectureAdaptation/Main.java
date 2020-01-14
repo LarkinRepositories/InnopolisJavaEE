@@ -1,3 +1,5 @@
+package lectureAdaptation;
+
 import ConnectionManager.ConnectionManager;
 import  ConnectionManager.ConnectionManagerJdbcImpl;
 import dao.UserDao;
@@ -36,7 +38,5 @@ public class Main {
         userDao.updateUserById(user);
         user = userDao.getUserById(1);
         LOGGER.info("Конечный объект: " + user);
-//        Logger here
-//         User(Integer id, String name, Date birthday, Integer loginId, String city, String email, String description)
     }
 }
