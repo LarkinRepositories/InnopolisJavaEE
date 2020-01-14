@@ -11,4 +11,9 @@ public class ConnectionManagerMock implements ConnectionManager {
     public Connection getConnection() {
         return new ConnectionMock();
     }
+
+    @Override
+    public boolean closeConnection(Connection connection) {
+        return false;
+    }
 }
