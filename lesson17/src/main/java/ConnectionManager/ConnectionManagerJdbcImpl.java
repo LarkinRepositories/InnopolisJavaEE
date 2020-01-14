@@ -44,4 +44,8 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
         }
         return connection;
     }
+
+    public static Connection getDatabaseConnection() {
+        return ConnectionManagerJdbcImpl.getInstance().getConnection();
+    }
 }

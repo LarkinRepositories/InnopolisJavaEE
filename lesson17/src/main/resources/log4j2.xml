@@ -16,7 +16,7 @@
             <PatternLayout pattern="%m%n"/>
         </Console>
         <JDBC name ="DATABASE" tablename="logs">
-            <ConnectionFactory class="ConnectionManager.ConnectionManagerJdbcImpl" method="getConnection" />
+            <ConnectionFactory class="ConnectionManager.ConnectionManagerJdbcImpl" method="getDatabaseConnection" />
             <Column name="date" isEventTimestamp="true" />
             <Column name="log_level" pattern="%level" isUnicode="false" />
             <Column name="message" pattern="%message" isUnicode="false" />
