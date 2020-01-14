@@ -2,6 +2,8 @@ package dao;
 
 import ConnectionManager.ConnectionManager;
 import ConnectionManager.ConnectionManagerJdbcImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pojo.User;
 
 import java.sql.Connection;
@@ -11,11 +13,12 @@ import java.sql.SQLException;
 
 public class UserDaoJdbcImpl implements UserDao {
 //    private static final ConnectionManagerJdbcImpl CONNECTION_MANAGER_JDBC = ConnectionManagerJdbcImpl.getInstance();
-    private final String INSERT_INTO_USERS = "INSERT INTO USERS (name, birthday, login_Id, city, email, description) VALUES (?, ?, ?, ?, ?, ?)";
-    private final String GET_USER_BY_ID = "SELECT * FROM USERS WHERE id = ?";
-    private final String UPDATE_USER_BY_ID = "UPDATE USERS set name=?, birthday = ?, login_Id = ?, city = ?, email=?, decription = ? WHERE id = ?";
-    private final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE id =?";
+    private final String INSERT_INTO_USERS = "INSERT INTO PUBLIC.USERS (NAME, BIRTHDAY, LOGIN_ID, CITY, EMAIL, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
+    private final String GET_USER_BY_ID = "SELECT * FROM PUBLIC.USERS WHERE ID = ?";
+    private final String UPDATE_USER_BY_ID = "UPDATE PUBLIC.USERS set NAME=?, BIRTHDAY = ?, LOGIN_ID = ?, CITY = ?, EMAIL=?, DESCRIPTION = ? WHERE id = ?";
+    private final String DELETE_USER_BY_ID = "DELETE FROM PUBLIC.USERS WHERE ID =?";
     private final ConnectionManager connectionManager;
+    private final Logger LOGGER = LoggerFactory.getLogger(UserDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -24,6 +27,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean addUser(User user) {
+        LOGGER.info("addUser begins to work");
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_USERS)) {
             preparedStatement.setString(1, user.getName());
@@ -34,6 +38,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(6, user.getDescription());
             preparedStatement.execute();
         } catch (SQLException e) {
+            LOGGER.error("Error in addUser method: " + e);
             e.printStackTrace();
             return false;
         }
@@ -42,6 +47,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User getUserById(Integer id) {
+       LOGGER.info("getUserById method begins to work");
        try (Connection connection = connectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID)) {
            preparedStatement.setInt(1, id);
@@ -59,6 +65,7 @@ public class UserDaoJdbcImpl implements UserDao {
                }
            }
        } catch (SQLException e) {
+           LOGGER.error("Error in getUserById method:" + e);
            e.printStackTrace();
        }
        return null;
@@ -66,6 +73,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean updateUserById(User user) {
+        LOGGER.info("updateUserById method begins to work");
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BY_ID)) {
             preparedStatement.setString(1, user.getName());
@@ -77,6 +85,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setInt(7, user.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
+            LOGGER.error("Error in updateUserById method:" + e);
             e.printStackTrace();
             return false;
         }
@@ -85,11 +94,13 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean deleteUserById(Integer id) {
+       LOGGER.info("deleteUserById begins to work");
        try (Connection connection = connectionManager.getConnection();
        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID)) {
            preparedStatement.setInt(1, id);
            preparedStatement.execute();
        } catch (SQLException e) {
+           LOGGER.error("Error in deleteUserById method:" + e);
            e.printStackTrace();
            return false;
        }

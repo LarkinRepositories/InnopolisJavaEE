@@ -1,8 +1,11 @@
 package pojo;
 
+import lombok.Data;
+import lombok.Setter;
+
 import java.sql.Date;
 
-
+@Data
 public class User {
     private Integer id;
     private String name;
@@ -49,5 +52,34 @@ public class User {
 
     public String getDescription() {
         return description;
+    }
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setLoginId(Integer loginId) {
+        this.loginId = loginId;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
