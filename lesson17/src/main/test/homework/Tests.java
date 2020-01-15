@@ -13,22 +13,15 @@ import ConnectionManager.ConnectionManager;
 import ConnectionManager.ConnectionManagerJdbcImpl;
 import dao.UserDao;
 import dao.UserDaoJdbcImpl;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pojo.User;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -40,6 +33,8 @@ public class Tests {
     private Connection connection;
     @Mock
     private PreparedStatement preparedStatement;
+    @Mock
+    private ResultSet resultSetMock;
     private User user;
 //    @BeforeAll
 //    static void init() {
@@ -83,5 +78,83 @@ public class Tests {
         verify(preparedStatement, times(1)).setString(6, description);
 
         assertAll("Assert all", () -> assertTrue(result));
+    }
+
+//    @Disabled("Not working correctly")
+    @Test
+    void getUserById() throws SQLException {
+        when(connectionManager.getConnection()).thenReturn(connection);
+        when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+        when(resultSetMock.getInt("ID")).thenReturn(1);
+        when(resultSetMock.getString("NAME")).thenReturn("Username");
+        when(resultSetMock.getDate("BIRTHDAY")).thenReturn(Date.valueOf("1985-11-05"));
+        when(resultSetMock.getInt("LOGIN_ID")).thenReturn(-1452484329);
+        when(resultSetMock.getString("CITY")).thenReturn("City");
+        when(resultSetMock.getString("EMAIL")).thenReturn("mail@mail.com");
+        when(resultSetMock.getString("DESCRIPTION")).thenReturn("random description");
+        doReturn(preparedStatement).when(connection).prepareStatement(UserDaoJdbcImpl.GET_USER_BY_ID);
+        doReturn(resultSetMock).when(preparedStatement).executeQuery();
+//        when(userDao.getUserById(1)).thenReturn(new User(
+//                1,
+//                "Username",
+//                Date.valueOf("1985-11-05"),
+//                -1452484329,
+//                "City",
+//                "mail@mail.com",
+//                "random description"
+//        ));
+        User user = new User(
+                1,
+                "Username",
+                Date.valueOf("1985-11-05"),
+                -1452484329,
+                "City",
+                "mail@mail.com",
+                "random description"
+        );
+        Integer id = 1;
+        User user1 = userDao.getUserById(id);
+        verify(connectionManager, times(1)).getConnection();
+        verify(connection, times(1)).prepareStatement(UserDaoJdbcImpl.GET_USER_BY_ID);
+//        verify(preparedStatement, times(1)).getResultSet();
+
+//        assertEquals(user, user1);
+        assertAll(() -> assertEquals(user, user1));
+    }
+
+    @Test
+    void updateUserById() throws SQLException {
+        when(connectionManager.getConnection()).thenReturn(connection);
+        doReturn(preparedStatement).when(connection).prepareStatement(UserDaoJdbcImpl.UPDATE_USER_BY_ID);
+        User user = new User(2, "New userName", Date.valueOf("1955-05-11"), 24, "new City", "newmail@mail.com", "new description");
+        boolean result = userDao.updateUserById(user);
+
+        verify(connectionManager, times (1)).getConnection();
+        verify(connection, times(1)).prepareStatement(UserDaoJdbcImpl.UPDATE_USER_BY_ID);
+        verify(preparedStatement, times(1)).setString(1, user.getName());
+        verify(preparedStatement, times(1)).setDate(2, user.getBirthday());
+        verify(preparedStatement, times(1)).setInt(3, user.getLoginId());
+        verify(preparedStatement, times(1)).setString(4,user.getCity());
+        verify(preparedStatement, times(1)).setString(5, user.getEmail());
+        verify(preparedStatement, times(1)).setString(6, user.getDescription());
+        verify(preparedStatement, times(1)).setInt(7, user.getId());
+
+        assertAll(() -> assertTrue(result));
+
+    }
+
+    @Test
+    void deleteUserById() throws SQLException {
+        when(connectionManager.getConnection()).thenReturn(connection);
+        doReturn(preparedStatement).when(connection).prepareStatement(UserDaoJdbcImpl.DELETE_USER_BY_ID);
+        Integer id = 2;
+        boolean result = userDao.deleteUserById(id);
+
+        verify(connectionManager, times(1)).getConnection();
+        verify(connection, times(1)).prepareStatement(UserDaoJdbcImpl.DELETE_USER_BY_ID);
+        verify(preparedStatement, times(1)).setInt(1, id);
+        verify(preparedStatement, times(1)).execute();
+
+        assertAll(() -> assertTrue(result));
     }
 }
