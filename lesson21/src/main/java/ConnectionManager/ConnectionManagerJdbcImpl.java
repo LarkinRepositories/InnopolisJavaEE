@@ -36,8 +36,8 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(
-//                         "jdbc:postgresql://host.docker.internal:5434/mobile",
-                    "jdbc:postgresql://localhost:5434/mobile",
+                         "jdbc:postgresql://host.docker.internal:5434/mobile",
+//                    "jdbc:postgresql://localhost:5434/mobile",
                     "postgres",
                     "qwerty");
         } catch (ClassNotFoundException | SQLException e) {

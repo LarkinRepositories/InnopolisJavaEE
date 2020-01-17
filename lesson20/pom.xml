@@ -11,11 +11,6 @@
 
     <artifactId>lesson20</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.199</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apiguardian/apiguardian-api -->
         <dependency>
             <groupId>org.apiguardian</groupId>

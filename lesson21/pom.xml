@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lesson21</artifactId>
+    <packaging>war</packaging>
   <properties>
       <logback.version>1.2.3</logback.version>
       <postresql.version>42.2.8</postresql.version>
