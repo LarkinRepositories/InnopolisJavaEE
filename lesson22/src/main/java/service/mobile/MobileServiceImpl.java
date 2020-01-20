@@ -29,4 +29,9 @@ public class MobileServiceImpl implements MobileService {
         Mobile mobile = new Mobile(null, model, price, manufacturer);
         return mobileDao.addMobile(mobile);
     }
+
+    @Override
+    public Mobile getMobileByid(Integer id) {
+        return mobileDao.getMobileById(id);
+    }
 }

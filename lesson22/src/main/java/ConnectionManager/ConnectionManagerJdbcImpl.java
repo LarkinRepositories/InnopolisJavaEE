@@ -41,7 +41,7 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
                     "postgres",
                     "qwerty");
         } catch (ClassNotFoundException | SQLException e) {
-            LOGGER.error("Some thing wrong in getConnection method", e);
+            LOGGER.warn("Some thing wrong in getConnection method", e);
         }
         return connection;
     }
@@ -53,7 +53,7 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
             connection.close();
             LOGGER.info("connection successfully closed");
         } catch (SQLException e) {
-            LOGGER.error("Error closing the connection: " + e);
+            LOGGER.warn("Error closing the connection: " + e);
             e.printStackTrace();
             return false;
         }

@@ -37,7 +37,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.trace("Error in addUser method: " + e);
+            LOGGER.warn("Error in addUser method: " + e);
             e.printStackTrace();
             return false;
         }
@@ -62,7 +62,7 @@ public class UserDaoJdbcImpl implements UserDao {
 //               }
 //           }
 //       } catch (SQLException e) {
-//           LOGGER.trace("Error in getUserById method:" + e);
+//           LOGGER.warn("Error in getUserById method:" + e);
 //           e.printStackTrace();
 //       }
 //       return null;
@@ -82,13 +82,11 @@ public class UserDaoJdbcImpl implements UserDao {
                     dbReturnedUser.setId(resultSet.getInt(1));
                     dbReturnedUser.setLogin(resultSet.getString(2));
                     dbReturnedUser.setPassword(resultSet.getString(3));
-                    dbReturnedUser.setPhone(resultSet.getString(4));
-                    dbReturnedUser.setEmail(resultSet.getString(5));
                 }
             }
             return user.equals(dbReturnedUser);
         } catch (SQLException e) {
-            LOGGER.trace("Error in isSame method: " +e);
+            LOGGER.warn("Error in isSame method: " +e);
             return false;
         }
     }
@@ -105,7 +103,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.trace("Error in updateUserById method:" + e);
+            LOGGER.warn("Error in updateUserById method:" + e);
             e.printStackTrace();
             return false;
         }
@@ -120,7 +118,7 @@ public class UserDaoJdbcImpl implements UserDao {
            preparedStatement.setInt(1, id);
            preparedStatement.execute();
        } catch (SQLException e) {
-           LOGGER.trace("Error in deleteUserById method:" + e);
+           LOGGER.warn("Error in deleteUserById method:" + e);
            e.printStackTrace();
            return false;
        }

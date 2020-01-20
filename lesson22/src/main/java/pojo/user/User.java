@@ -14,6 +14,9 @@ public class User {
     private String phone;
     private String email;
 
-
-
+    public User(Integer id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+    }
 }

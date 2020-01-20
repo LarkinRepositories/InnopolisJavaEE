@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@EJB
+//@EJB
 public class MobileDaoJdbcImpl implements MobileDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(MobileDaoJdbcImpl.class);
     public static final String INSERT_INTO_MOBILE = "INSERT INTO mobile values (DEFAULT, ?, ?, ?)";
@@ -54,7 +54,7 @@ public class MobileDaoJdbcImpl implements MobileDao {
             preparedStatement.setString(3, mobile.getManufacturer());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.trace("Something wrong in addMobile method", e);
+            LOGGER.warn("Something wrong in addMobile method", e);
             return false;
         }
         return true;
@@ -75,7 +75,7 @@ public class MobileDaoJdbcImpl implements MobileDao {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.trace("Something wrong in getMobileById method", e);
+            LOGGER.warn("Something wrong in getMobileById method", e);
         }
         return null;
     }
@@ -92,7 +92,7 @@ public class MobileDaoJdbcImpl implements MobileDao {
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
-            LOGGER.trace("Some thing wrong in updateMobileById method", e);
+            LOGGER.warn("Some thing wrong in updateMobileById method", e);
         }
         return false;
     }
@@ -104,13 +104,14 @@ public class MobileDaoJdbcImpl implements MobileDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.trace("Some thing wrong in deleteMobileById method", e);
+            LOGGER.warn("Some thing wrong in deleteMobileById method", e);
             return false;
         }
         return true;
     }
 
-    @Override public void createTable() {
+    @Override
+    public void createTable() {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TABLE_MOBILE)) {
             preparedStatement.execute();
@@ -135,7 +136,7 @@ public class MobileDaoJdbcImpl implements MobileDao {
             }
             return mobileList;
         } catch (SQLException e) {
-            LOGGER.trace("Error in getAllMobile method: " +e);
+            LOGGER.warn("Error in getAllMobile method: " +e);
 //            e.printStackTrace();
         }
         return new ArrayList<>();
