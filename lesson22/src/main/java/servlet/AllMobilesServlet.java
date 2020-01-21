@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 
-@WebServlet(urlPatterns = "/allmobiles")
+@WebServlet(urlPatterns = "/allmobiles" , name="Mobiles")
 public class AllMobilesServlet extends HttpServlet {
     private MobileService mobileService;
 
@@ -32,5 +32,12 @@ public class AllMobilesServlet extends HttpServlet {
         req.setAttribute("PageTitle", "Mobiles");
         req.setAttribute("PageBody", "allmobiles.jsp");
         req.getRequestDispatcher("/layout.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        Integer id = Integer.valueOf(req.getParameter("id"));
+
     }
 }

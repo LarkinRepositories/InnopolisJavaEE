@@ -31,7 +31,21 @@ public class MobileServiceImpl implements MobileService {
     }
 
     @Override
-    public Mobile getMobileByid(Integer id) {
+    public Mobile getMobileById(Integer id) {
         return mobileDao.getMobileById(id);
+    }
+
+    @Override
+    public boolean deleteMobileById(Integer id) {
+        return mobileDao.deleteMobileById(id);
+    }
+
+    @Override
+    public boolean updateMobileById(Integer id, String model, Integer price, String manufacturer) {
+        Mobile mobile = mobileDao.getMobileById(id);
+        mobile.setModel(model);
+        mobile.setPrice(price);
+        mobile.setManufacturer(manufacturer);
+        return mobileDao.updateMobileById(mobile);
     }
 }

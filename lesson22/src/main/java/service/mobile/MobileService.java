@@ -7,6 +7,8 @@ import java.util.Collection;
 public interface MobileService {
     Collection<Mobile> getMobiles();
     boolean addMobile(String model, Integer price, String manufacturer);
-    Mobile getMobileByid(Integer id);
+    Mobile getMobileById(Integer id);
+    boolean deleteMobileById(Integer id);
+    boolean updateMobileById(Integer id, String model, Integer price, String manufacturer);
 
 }
