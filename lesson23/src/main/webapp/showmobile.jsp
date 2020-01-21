@@ -8,4 +8,4 @@
 </ul>
 
 <br>
-<a href="/mobiles/">Main page</a>
+<a href="/">Main page</a>
