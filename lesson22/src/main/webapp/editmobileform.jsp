@@ -2,14 +2,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:useBean id="mobile" class="pojo.mobile.Mobile" />
+<c:set target="${mobile}" property="model" value='<%= request.getParameter("id")%>' />
 <c:set target="${mobile}" property="model" value='<%= request.getParameter("model")%>' />
 <c:set target="${mobile}" property="price" value='<%= request.getParameter("price")%>' />
 <c:set target="${mobile}" property="manufacturer" value='<%= request.getParameter("manufacturer")%>' />
 
 
 
-<h1>Adding a new mobile</h1>
+<h1>Editing a new mobile</h1>
 <form method="post" action="${pageContext.request.contextPath}/editmobile" autocomplete="off">
+    <div class="form-group">
+        <label for="id">ID</label>
+        <input name="id" type="text" class="form-control" id="id" value="<jsp:getProperty name="mobile" property="id" />">
+    </div>
     <div class="form-group">
         <label for="model">Model</label>
         <input name="model" type="text" class="form-control" id="model" value="<jsp:getProperty name="mobile" property="model" />">

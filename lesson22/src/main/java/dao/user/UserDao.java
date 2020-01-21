@@ -2,12 +2,15 @@ package dao.user;
 
 import pojo.user.User;
 
+import java.util.Collection;
+
 public interface UserDao {
 
-    public boolean addUser(User user);
-//    public User getUserById(Integer id);
-    public boolean isSame(User user);
-    public boolean updateUserById(User user);
-    public boolean deleteUserById(Integer id);
+    boolean addUser(User user);
+    User getUserById(Integer id);
+    boolean isSame(User user);
+    boolean updateUserById(User user);
+    boolean deleteUserById(Integer id);
+    Collection<User> getUsers();
 
 }

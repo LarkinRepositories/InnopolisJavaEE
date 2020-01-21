@@ -3,12 +3,16 @@ package dao.user;
 import ConnectionManager.ConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pojo.mobile.Mobile;
 import pojo.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class UserDaoJdbcImpl implements UserDao {
 //    private static final ConnectionManagerJdbcImpl CONNECTION_MANAGER_JDBC = ConnectionManagerJdbcImpl.getInstance();
@@ -16,10 +20,11 @@ public class UserDaoJdbcImpl implements UserDao {
     private final Logger LOGGER = LoggerFactory.getLogger(UserDaoJdbcImpl.class);
 
     public static final String INSERT_INTO_USERS = "INSERT INTO PUBLIC.USERS VALUES (DEFAULT, ?, ?, ?, ?)";
-//    public static final String GET_USER_BY_ID = "SELECT * FROM PUBLIC.USERS WHERE ID = ?";
+    public static final String GET_USER_BY_ID = "SELECT * FROM users WHERE ID = ?";
     public static final String GET_USER_BY_LOGIN = "SELECT * FROM users WHERE LOGIN = ?";
-    public static final String UPDATE_USER_BY_ID = "UPDATE PUBLIC.USERS set LOGIN=?, PASSWORD = ?, PHONE = ?, EMAIL=? WHERE ID = ?";
+    public static final String UPDATE_USER_BY_ID = "UPDATE users set LOGIN=?, PASSWORD = ?, PHONE = ?, EMAIL=? WHERE ID = ?";
     public static final String DELETE_USER_BY_ID = "DELETE FROM PUBLIC.USERS WHERE ID =?";
+    public static final String SELECT_ALL_FROM_USERS = "SELECT * FROM USERS";
 
     public UserDaoJdbcImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -44,29 +49,29 @@ public class UserDaoJdbcImpl implements UserDao {
         return true;
     }
 
-//    @Override
-//    public User getUserById(Integer id) {
-//       LOGGER.info("getUserById method begins to work");
-//       try (Connection connection = connectionManager.getConnection();
-//            PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID)) {
-//           preparedStatement.setInt(1, id);
-//           try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//               if (resultSet.next()) {
-//                   return new User(
-//                     resultSet.getInt(1),
-//                     resultSet.getString(2),
-//                     resultSet.getString(3),
-//                     resultSet.getString(4),
-//                     resultSet.getString(5)
-//                   );
-//               }
-//           }
-//       } catch (SQLException e) {
-//           LOGGER.warn("Error in getUserById method:" + e);
-//           e.printStackTrace();
-//       }
-//       return null;
-//    }
+    @Override
+    public User getUserById(Integer id) {
+       LOGGER.info("getUserById method begins to work");
+       try (Connection connection = connectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID)) {
+           preparedStatement.setInt(1, id);
+           try (ResultSet resultSet = preparedStatement.executeQuery()) {
+               if (resultSet.next()) {
+                   return new User(
+                     resultSet.getInt(1),
+                     resultSet.getString(2),
+                     resultSet.getString(3),
+                     resultSet.getString(4),
+                     resultSet.getString(5)
+                   );
+               }
+           }
+       } catch (SQLException e) {
+           LOGGER.warn("Error in getUserById method:" + e);
+           e.printStackTrace();
+       }
+       return null;
+    }
 
 
     @Override
@@ -98,8 +103,8 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getPhone());
-            preparedStatement.setString(4, user.getPhone());
-            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setInt(5, user.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.warn("Error in updateUserById method:" + e);
@@ -122,5 +127,29 @@ public class UserDaoJdbcImpl implements UserDao {
            return false;
        }
        return true;
+    }
+
+    @Override
+    public Collection<User> getUsers() {
+        List<User> userList = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FROM_USERS);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+               userList.add(new User(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5)
+                ));
+            }
+            return userList;
+        } catch (SQLException e) {
+            LOGGER.warn("Error in getUsers method: " +e);
+//            e.printStackTrace();
+        }
+        return new ArrayList<>();
+
     }
 }

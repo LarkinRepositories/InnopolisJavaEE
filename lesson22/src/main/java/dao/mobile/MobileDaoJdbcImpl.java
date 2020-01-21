@@ -126,7 +126,7 @@ public class MobileDaoJdbcImpl implements MobileDao {
         try (Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FROM_MOBILE);
         ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 mobileList.add(new Mobile(
                         resultSet.getInt(1),
                         resultSet.getString(2),
