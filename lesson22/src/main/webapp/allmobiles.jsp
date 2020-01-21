@@ -20,9 +20,11 @@
             <td>${mobile.price}</td>
             <td>${mobile.manufacturer}</td>
             <td><a href="${pageContext.request.contextPath}/showmobile?id=${mobile.id}">Link</a></td>
+            <td><a href="${pageContext.request.contextPath}/delete?id=${mobile.id}">Delete</a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 <br>
-<a href="/mobiles/">Main page</a>
+<table class="table"><tr><td><a href="${pageContext.request.contextPath}/mobiles/">Main page</a></td><td><a href="${pageContext.request.contextPath}/addmobile">Add new mobile</a></td></tr></table>
+

@@ -25,7 +25,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        req.setAttribute("PageTitle", "Authorization");
+        req.setAttribute("PageBody", "login.jsp");
+        req.getRequestDispatcher("/layout.jsp").forward(req, resp);
     }
 
     @Override
@@ -36,13 +38,13 @@ public class LoginServlet extends HttpServlet {
         boolean hasUser = userService.isSame(login, password);
 
         HttpSession session = req.getSession();
-        if (!hasUser) {
+        if (hasUser) {
             session.setAttribute("user", login);
         } else {
             session.setAttribute("user", null);
         }
-        resp.sendRedirect((String) session.getAttribute("ForwardedUrl"));
-
+//        resp.sendRedirect((String) session.getAttribute("ForwardedUrl"));
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 
 

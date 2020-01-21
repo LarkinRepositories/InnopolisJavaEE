@@ -121,7 +121,7 @@ public class MobileDaoJdbcImpl implements MobileDao {
     }
 
     @Override
-    public Collection<Mobile> getAllMobile() {
+    public List<Mobile> getAllMobile() {
         List<Mobile> mobileList = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FROM_MOBILE);

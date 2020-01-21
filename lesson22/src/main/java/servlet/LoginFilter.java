@@ -27,9 +27,9 @@ public class LoginFilter implements Filter {
         String authURI = httpServletRequest.getContextPath() + "/login";
         boolean isAuthRequest = httpServletRequest.getRequestURI().equals(authURI);
         boolean isAuthPage = httpServletRequest.getRequestURI().endsWith("login.jsp");
+
         if (isAuthorized && (isAuthRequest || isAuthPage)) {
-            logger.info("auth success");
-            RequestDispatcher dispatcher = servletRequest.getRequestDispatcher("/allmobiles");
+            RequestDispatcher dispatcher = servletRequest.getRequestDispatcher("/");
             dispatcher.forward(servletRequest, servletResponse);
         } else if (isAuthorized || isAuthRequest) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -37,7 +37,8 @@ public class LoginFilter implements Filter {
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/login");
             requestDispatcher.forward(servletRequest, servletResponse);
         }
-        session.setAttribute("ForwardedUrl", httpServletRequest.getRequestURI());
+//        session.setAttribute("ForwardedUrl", httpServletRequest.getContextPath());
+
     }
 
     @Override

@@ -79,7 +79,6 @@ public class UserDaoJdbcImpl implements UserDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     dbReturnedUser = new User();
-                    dbReturnedUser.setId(resultSet.getInt(1));
                     dbReturnedUser.setLogin(resultSet.getString(2));
                     dbReturnedUser.setPassword(resultSet.getString(3));
                 }

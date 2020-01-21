@@ -34,7 +34,9 @@ public class ShowMobileServlet extends HttpServlet {
             return;
         }
         req.setAttribute("mobile", mobile);
-        req.getRequestDispatcher("/showmobile.jsp").forward(req, resp);
+        req.setAttribute("PageTitle", mobile.getModel());
+        req.setAttribute("PageBody", "showmobile.jsp");
+        req.getRequestDispatcher("/layout.jsp").forward(req, resp);
     }
 
 

@@ -26,7 +26,7 @@ public class AddMobileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("PageTitle", "New Mobiles");
-        req.setAttribute("PageBody", "form.jsp");
+        req.setAttribute("PageBody", "addmobileform.jsp");
         req.getRequestDispatcher("/layout.jsp").forward(req, resp);
     }
 
