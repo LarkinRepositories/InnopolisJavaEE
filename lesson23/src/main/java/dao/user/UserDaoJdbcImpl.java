@@ -56,13 +56,13 @@ public class UserDaoJdbcImpl implements UserDao {
            preparedStatement.setInt(1, id);
            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                if (resultSet.next()) {
-                   return new User(
-                     resultSet.getInt(1),
-                     resultSet.getString(2),
-                     resultSet.getString(3),
-                     resultSet.getString(4),
-                     resultSet.getString(5)
-                   );
+                   return new User.Builder(
+                           resultSet.getString(2),
+                           resultSet.getString(3))
+                           .withId(resultSet.getInt(1))
+                           .withPhone(resultSet.getString(4))
+                           .withEmail(resultSet.getString(5))
+                           .build();
                }
            }
        } catch (SQLException e) {
@@ -82,9 +82,7 @@ public class UserDaoJdbcImpl implements UserDao {
             User dbReturnedUser = null;
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    dbReturnedUser = new User();
-                    dbReturnedUser.setLogin(resultSet.getString(2));
-                    dbReturnedUser.setPassword(resultSet.getString(3));
+                    dbReturnedUser = new User.Builder(resultSet.getString(2), resultSet.getString(3)).build();
                 }
             }
             return user.equals(dbReturnedUser);
@@ -135,13 +133,13 @@ public class UserDaoJdbcImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FROM_USERS);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-               userList.add(new User(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5)
-                ));
+               userList.add(
+                       new User.Builder(resultSet.getString(2), resultSet.getString(3))
+                       .withId(resultSet.getInt(1))
+                       .withPhone(resultSet.getString(4))
+                       .withEmail(resultSet.getString(5))
+                       .build()
+               );
             }
             return userList;
         } catch (SQLException e) {

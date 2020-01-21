@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<jsp:useBean id="user" class="pojo.user.User" />
+<jsp:useBean id="user" class="pojo.user.User.Builder" />
 <c:set target="${user}" property="id" value='<%= request.getParameter("id")%>' />
 <c:set target="${user}" property="login" value='<%= request.getParameter("login")%>' />
 <c:set target="${user}" property="password" value='<%= request.getParameter("password")%>' />

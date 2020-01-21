@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean addUser(String login, String password, String phone, String email) {
-       User user = new User(null, login, password, phone, email);
+       User user = new User.Builder(login, password).withPhone(phone).withEmail(email).build();
        return userDao.addUser(user);
     }
 
@@ -41,10 +41,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean isSame(String login, String password) {
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-       return userDao.isSame(user);
+        User user = new User.Builder(login, password).build();
+        return userDao.isSame(user);
     }
 
     @Override
