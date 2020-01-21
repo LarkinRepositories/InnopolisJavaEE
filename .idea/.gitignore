@@ -1,3 +1,4 @@
+
 # Default ignored files
 # User-specific stuff
 .idea/**/workspace.xml
@@ -25,3 +26,6 @@
 *.ipr
 # Default ignored files
 /workspace.xml
+# Datasource local storage ignored files
+/dataSources.local.xml
+/dataSources/

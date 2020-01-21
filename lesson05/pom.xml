@@ -5,30 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>InnopolisJavaEE</groupId>
-    <artifactId>InnopolisJavaEE</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>lesson05</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-    <modules>
-        <module>lesson02</module>
-        <module>lesson03</module>
-        <module>lesson05</module>
-        <module>lesson06</module>
-        <module>lesson07</module>
-        <module>lesson08</module>
-        <module>lesson09</module>
-        <module>lesson10</module>
-        <module>lesson12</module>
-        <module>lesson15</module>
-        <module>lesson16</module>
-        <module>lesson17</module>
-        <module>lesson20</module>
-        <module>lesson21</module>
-        <module>lesson22</module>
-    </modules>
     <build>
         <plugins>
             <plugin>
@@ -43,17 +21,17 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
             <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
         </dependency>
     </dependencies>
 </project>
