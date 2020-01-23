@@ -31,6 +31,7 @@
         <module>lesson23</module>
         <module>lesson24</module>
         <module>lesson25</module>
+        <module>lesson29</module>
     </modules>
     <build>
         <plugins>
