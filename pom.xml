@@ -33,6 +33,8 @@
         <module>lesson25</module>
         <module>lesson29</module>
         <module>lesson30</module>
+        <module>lesson31</module>
+        <module>lesson32</module>
     </modules>
     <build>
         <plugins>

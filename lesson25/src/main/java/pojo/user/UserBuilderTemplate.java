@@ -2,14 +2,16 @@ package pojo.user;
 
 public abstract class UserBuilderTemplate {
     public final User run(String...args) {
-        setLogin(args[0]);
-        setPassword(args[1]);
-        setPhone(args[2]);
-        setEmail(args[3]);
+        setId(Integer.valueOf(args[0]));
+        setLogin(args[1]);
+        setPassword(args[2]);
+        setPhone(args[3]);
+        setEmail(args[4]);
 
         return build();
     }
 
+    abstract void setId(Integer id);
     abstract void setLogin(String login);
     abstract void setPassword(String password);
     abstract void setPhone(String phone);

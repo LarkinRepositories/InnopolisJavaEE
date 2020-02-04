@@ -17,7 +17,7 @@ import java.util.Collection;
 @Service
 @Scope("singleton") //по умолчанию
 //@Scope("prototype")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserDao userDao;
 

@@ -4,6 +4,9 @@ import ConnectionManager.ConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import pojo.mobile.Mobile;
 
 import javax.inject.Inject;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@EJB
+
 public class MobileDaoJdbcImpl implements MobileDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(MobileDaoJdbcImpl.class);
     public static final String INSERT_INTO_MOBILE = "INSERT INTO mobile values (DEFAULT, ?, ?, ?)";

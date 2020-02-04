@@ -20,10 +20,10 @@ public class User {
         private String email;
 
         public Builder(String login, String password) {
-            this.id = null;
             this.login = login;
             this.password = password;
         }
+
         public Builder withId(Integer id) {
             this.id = id;
             return this;
@@ -37,6 +37,11 @@ public class User {
         public Builder withEmail(String email) {
             this.email = email;
             return this;
+        }
+
+        @Override
+        void setId(Integer id) {
+            this.id = id;
         }
 
         @Override

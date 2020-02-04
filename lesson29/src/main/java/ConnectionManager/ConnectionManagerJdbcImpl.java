@@ -2,6 +2,7 @@ package ConnectionManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Component
 public class ConnectionManagerJdbcImpl implements ConnectionManager {
     private final Logger LOGGER = LoggerFactory.getLogger(ConnectionManagerJdbcImpl.class);
 

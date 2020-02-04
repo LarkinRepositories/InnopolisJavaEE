@@ -15,8 +15,10 @@ import java.util.Collection;
 @Service
 public class MobileServiceImpl implements MobileService {
     private Logger logger = LoggerFactory.getLogger(MobileService.class);
+//    @Autowired
     private final MobileDao mobileDao;
 
+    @Autowired
     public MobileServiceImpl(ConnectionManager connectionManager) {
         mobileDao = new MobileDaoJdbcImpl(connectionManager);
     }

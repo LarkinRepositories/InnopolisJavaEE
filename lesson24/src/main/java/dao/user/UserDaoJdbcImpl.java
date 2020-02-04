@@ -42,7 +42,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.warn("Error in addUser method: " + e);
-            e.printStackTrace();
+//            e.printStackTrace();
             return false;
         }
         return true;
